@@ -1,0 +1,36 @@
+This gem is a bridge between the OTRS API.
+You can use this to connect to the OTRS API in a more RESTful way.
+This is still a work in development and only partial functionality has been added.
+
+Items to clean up
+ - Finish making tickets/articles/links create/update methods more ActiveRecord like
+
+Partially implemented
+  - Tickets API
+  - Articles API
+  - Links API
+  - ITSM ConfigItems API
+  
+
+To customize for your use you must have the OTRS json.pl in your OTRS cgi-bin directory.
+I also added ITSMConfigItemObjects to this json as it is required for my use.
+I will create an OPM package with a custom json.pl to do it the right way (instead of editing existing files directly, causing errors in the admin interface).
+
+You need include this gem in your project and call 
+
+	OtrsConnector.initialize_for_app(host, api_url, user, pass)
+
+The username/password combo should be an existing agent in OTRS.
+
+SIMPLE EXAMPLES:
+
+Articles:
+
+	articles = OtrsConnector::OTRS::Ticket::Article.where(ticket_id)
+	article = OtrsConnector::OTRS::Ticket::Article.find(id)
+	article = OtrsConnector::OTRS::Ticket::Article.new(params[:article])
+	article.save
+	article.update_attributes(params[:article])
+	article.destroy
+
+Source classes: https://github.com/cpuguy83/rails_otrs
